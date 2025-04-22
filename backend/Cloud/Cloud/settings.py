@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'oauth2_provider',
     "corsheaders",
     'drf_yasg',
-    'CloudAPI'
+    'CloudAPI',
+    'rest_framework'
 ]
 
 REST_FRAMEWORK = {
@@ -86,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cloud_private',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'Abc@123',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -135,9 +136,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Khong xoa chi can comment lai
 # DHuy
-OAUTH2_CLIENT_ID = 'Hz5KpriFU8VFDeb4ysxbbTiRrZkTe2nheIHC1Ts0'
-OAUTH2_CLIENT_SECRET = '5DQHzWe3c3xZIknN6CyfTJ5zGu5rwIW0HT3UqUiL8tVoIDdSwZroiENlUvDZoF3Tac456wHqLHDiLwtfwp4wGSMTPLqaNaZpToOFXiSbiCy8AuhZYEBRqGnoObQFO7qk'
-
-PROXMOX_SERVER_URL = '192.168.127.12:8006'
-PROXMOX_SERVER_USERNAME = 'root'
-PROXMOX_SERVER_PASSWORD = 'admin'
+# OAUTH2_CLIENT_ID = 'Hz5KpriFU8VFDeb4ysxbbTiRrZkTe2nheIHC1Ts0'
+# OAUTH2_CLIENT_SECRET = '5DQHzWe3c3xZIknN6CyfTJ5zGu5rwIW0HT3UqUiL8tVoIDdSwZroiENlUvDZoF3Tac456wHqLHDiLwtfwp4wGSMTPLqaNaZpToOFXiSbiCy8AuhZYEBRqGnoObQFO7qk'
+# Binh
+OAUTH2_CLIENT_ID = 'VMZ6iUfvBzEitZ5N5bAl4L519cU5rU6xkIOH9qkf'
+OAUTH2_CLIENT_SECRET = 'aAgiNZi8pr4RpRZ9YWJlk1mWgL4KujceyxQ95jC2KYq9I3CKAq8PjL1aNlYwuwtEXL1CkyU2SaKBlBWtpINLwWUJO6lCNxanDE1P7ptCmoRQnHFeJ93cGhcQ1jlkStUt'
+PROXMOX_SERVER_URL = '192.168.164.129:8006'
+PROXMOX_SERVER_USERNAME = 'root@pam'
+PROXMOX_SERVER_PASSWORD = '123456'

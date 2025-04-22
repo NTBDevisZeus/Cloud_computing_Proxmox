@@ -4,7 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def test_proxmox_connection():
+def connect_to_proxmox():
     try:
         proxmox = ProxmoxAPI(
             settings.PROXMOX_SERVER_URL,
@@ -12,10 +12,7 @@ def test_proxmox_connection():
             password=settings.PROXMOX_SERVER_PASSWORD,
             verify_ssl=False
         )
-        # Gửi lệnh đơn giản để test: lấy danh sách nodes
-        nodes = proxmox.nodes.get()
-        logger.info(f"✅ Kết nối Proxmox thành công! Danh sách nodes: {nodes}")
-        return True
+        return proxmox
     except Exception as e:
-        logger.error(f"❌ Lỗi khi kết nối Proxmox: {e}")
-        return False
+        logger.error(f"Kết nối Proxmox thất bại: {e}")
+        raise e
