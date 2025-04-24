@@ -11,6 +11,7 @@ class User(AbstractUser):
 
 class VirtualMachine(models.Model):
     name = models.CharField(max_length=255)
+    vm_id = models.CharField(max_length=255, default='')
     status = models.CharField(max_length=100)
     date_release = models.DateTimeField()
     date_end = models.DateTimeField()
@@ -35,3 +36,7 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"Invoice for {self.virtual_machine.name}"
+
+class Configuration(models.Model):
+    key = models.CharField(max_length=255)
+    value = models.CharField(max_length=255)

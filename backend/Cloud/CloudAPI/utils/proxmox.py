@@ -1,8 +1,7 @@
+import time
+import uuid
 from proxmoxer import ProxmoxAPI
 from django.conf import settings
-import logging
-
-logger = logging.getLogger(__name__)
 
 def connect_to_proxmox():
     try:
@@ -14,5 +13,28 @@ def connect_to_proxmox():
         )
         return proxmox
     except Exception as e:
-        logger.error(f"Kết nối Proxmox thất bại: {e}")
         raise e
+
+def create_vm_from_template(node_id, template_id, vm_name):
+    try:
+        proxmox_server = connect_to_proxmox()
+        vm_id = uuid.uuid4()
+        config = {
+            'vmid': vm_id,
+            'name': vm_name,
+            'clone': template_id,
+        }
+        task_id = proxmox_server.nodes(node_id).qemu.post(vmid=vm_id, **config)
+        task_status = proxmox_server.nodes(node_id).tasks(task_id).status.get()
+        while task_status['status'] == 'running':
+            print(f"Cloning in progress... ({task_status['status']})")
+            time.sleep(2)
+            task_status = proxmox_server.nodes(node_id).tasks(task_id).status.get()
+        if task_status['status'] == 'ok':
+            print(f"Created new virtual machine ID: {vm_name}")
+            return vm_id
+        else:
+            return None
+    except Exception as e:
+        print(e)
+        return None

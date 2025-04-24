@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from CloudAPI.models import User
+from CloudAPI.models import User, VirtualMachine
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,3 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(data['password'])
         user.save()
         return user
+
+
+class VirtualMachineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VirtualMachine
+        fields = '__all__'
+
+    def get_user(self, obj):
+        return obj.user.id
