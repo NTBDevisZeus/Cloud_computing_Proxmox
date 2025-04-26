@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from CloudAPI.utils.proxmox import connect_to_proxmox, create_vm_from_template, start_vm, \
     stop_vm, get_vm_ip  # import từ file utils
-from CloudAPI.utils import constant
+from CloudAPI.utils import constants
 from CloudAPI.models import User, VirtualMachine, Invoice, Log
 from CloudAPI.serializers import UserSerializer, VirtualMachineSerializer
 
