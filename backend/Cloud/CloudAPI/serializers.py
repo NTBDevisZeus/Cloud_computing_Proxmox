@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
 class VirtualMachineSerializer(serializers.ModelSerializer):
     class Meta:
         model = VirtualMachine
-        fields = '__all__'
+        fields = ['name', 'id' ,'status', 'date_release', 'date_end', 'unit_price']
 
     def get_user(self, obj):
         return obj.user.id

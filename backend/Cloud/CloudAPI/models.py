@@ -25,7 +25,7 @@ class Log(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     virtual_machine = models.ForeignKey(VirtualMachine, on_delete=models.CASCADE)
     time_start = models.DateTimeField()
-    time_off = models.DateTimeField()
+    time_off = models.DateTimeField(null=True)
 
     def __str__(self):
         return f"{self.user.username} log VM {self.virtual_machine.name}"
@@ -33,10 +33,6 @@ class Log(models.Model):
 class Invoice(models.Model):
     virtual_machine = models.ForeignKey(VirtualMachine, on_delete=models.CASCADE)
     total_amount = models.BigIntegerField()
-
+    is_paid = models.BooleanField(default=False)
     def __str__(self):
         return f"Invoice for {self.virtual_machine.name}"
-
-class Configuration(models.Model):
-    key = models.CharField(max_length=255)
-    value = models.CharField(max_length=255)
