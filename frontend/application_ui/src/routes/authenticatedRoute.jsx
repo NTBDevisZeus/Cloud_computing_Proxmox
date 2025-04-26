@@ -5,7 +5,7 @@ const AuthenticatedRoute = ({children}) => {
     const {user} = useContext(UserContext)
     const accessToken = localStorage.getItem("accessToken")
     let {pathname} = useLocation();
-    if (accessToken) {
+    if (accessToken && !user) {
         return <div></div>
     }
     if (!user) {

@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [isRemember, setIsRemember] = useState(false)
+    const [isRemember, setIsRemember] = useState(true)
     const {setUser} = useContext(UserContext)
     const location = useLocation()
     const navigator = useNavigate()

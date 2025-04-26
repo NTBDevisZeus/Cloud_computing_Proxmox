@@ -5,7 +5,13 @@ const endpoints = {
         register: "/users/"
     },
     users: {
-        self: '/users/self/'
+        self: '/users/self/',
+        vms: (id) => `/users/${id}/vms/`
+    },
+    vms: {
+        start: (id) => `/vms/${id}/start-vm/`,
+        stop: (id) => `/vms/${id}/stop-vm/`,
+        ip: (id) => `/vms/${id}/get-ip/`
     }
 }
 

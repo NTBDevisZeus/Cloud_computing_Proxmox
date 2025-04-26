@@ -20,7 +20,7 @@ function App() {
   useEffect( () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken && !user) {
-      initUserInfo
+      initUserInfo()
     }
   },[])
   return (

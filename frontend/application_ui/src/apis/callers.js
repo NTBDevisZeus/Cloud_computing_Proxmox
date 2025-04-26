@@ -34,6 +34,7 @@ const bindError = (result) => {
 }
 
 
+
 const callLogin = async (payload) => {
     const caller = publicCaller()
     payload = {
@@ -83,4 +84,62 @@ const fetchUserInfo = async () => {
     return result;
 }
 
-export {callLogin, fetchUserInfo, callRegistUser}
+const callGetUserVM = async (userid) => {
+    const caller = authenticatedCaller()
+    let result = null
+    await caller.get(endpoints['users'].vms(userid))
+    .then(success => {
+        result = bindSuccess(success) 
+    })
+    .catch(error => {
+        result = bindError(error)
+    })
+    return result;  
+}
+
+const callStartVM  = async (id) => {
+    const caller = authenticatedCaller()
+    let result = null
+    await caller.post(endpoints['vms'].start(id))
+    .then(success => {
+        result = bindSuccess(success) 
+    })
+    .catch(error => {
+        result = bindError(error)
+    })
+    return result;  
+}
+
+const callStopVM  = async (id) => {
+    const caller = authenticatedCaller()
+    let result = null
+    await caller.post(endpoints['vms'].stop(id))
+    .then(success => {
+        result = bindSuccess(success) 
+    })
+    .catch(error => {
+        result = bindError(error)
+    })
+    return result;  
+}
+
+const callgetVMIp  = async (id) => {
+    const caller = authenticatedCaller()
+    let result = null
+    await caller.get(endpoints['vms'].ip(id))
+    .then(success => {
+        result = bindSuccess(success) 
+    })
+    .catch(error => {
+        result = bindError(error)
+    })
+    return result;  
+}
+
+export {callLogin, 
+    fetchUserInfo, 
+    callRegistUser, 
+    callGetUserVM, 
+    callStartVM, 
+    callStopVM,
+    callgetVMIp}

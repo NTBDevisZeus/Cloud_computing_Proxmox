@@ -1,10 +1,9 @@
 from datetime import datetime
 
-from rest_framework import viewsets, generics, status, views, permissions
+from rest_framework import viewsets, generics, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from CloudAPI.utils.proxmox import connect_to_proxmox, create_vm_from_template, start_vm, \
-    stop_vm, get_vm_ip  # import từ file utils
+from CloudAPI.utils.proxmox import connect_to_proxmox, create_vm_from_template, start_vm, stop_vm, get_vm_ip
 from CloudAPI.utils import constants
 from CloudAPI.models import User, VirtualMachine, Invoice, Log
 from CloudAPI.serializers import UserSerializer, VirtualMachineSerializer
@@ -14,10 +13,16 @@ class UserViewSet(viewsets.ViewSet, generics.RetrieveUpdateAPIView, generics.Lis
     queryset = User.objects.all();
     serializer_class = UserSerializer
 
-    @action(methods=['get'], url_path='self', detail=False)
+    @action(methods=['get'], url_path='self', detail=False, permission_classes=[permissions.IsAuthenticated])
     def get_self_information(self, request):
         user = request.user
         return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], url_path='vms', detail=True, permission_classes=[permissions.IsAuthenticated])
+    def get_vms(self, request, pk=None):
+        user = request.user
+        vms = user.vms.all()
+        return Response(VirtualMachineSerializer(vms, many=True).data, status=status.HTTP_200_OK)
 
 
 class ProxmoxViewSet(viewsets.ViewSet):
@@ -47,14 +52,14 @@ class ProxmoxViewSet(viewsets.ViewSet):
                 new_vm = VirtualMachine.objects.create(name=vm_name,
                                                        vm_id=new_vm_id,
                                                        user=user,
-                                                       unit_price=constant.VM_PRICE,
+                                                       unit_price=constants.VM_PRICE,
                                                        date_release=date_release,
                                                        date_end=date_end,
-                                                       status=constant.ACTIVE_STATUS)
+                                                       status=constants.ACTIVE_STATUS)
 
                 Invoice.objects.create(
                     virtual_machine=new_vm,
-                    total_amount=constant.VM_PRICE)
+                    total_amount=constants.VM_PRICE)
         except Exception as e:
             print(e)
         if new_vm:
@@ -67,7 +72,7 @@ class ProxmoxViewSet(viewsets.ViewSet):
         start_status = start_vm(vm.vm_id)
         user = request.user
         if start_status.__eq__("OK"):
-            vm.status = constant.RUNNING_STATUS
+            vm.status = constants.RUNNING_STATUS
             vm.save()
             Log.objects.create(user=user, virtual_machine=vm, time_start= datetime.now(), time_off=None)
 
@@ -76,12 +81,12 @@ class ProxmoxViewSet(viewsets.ViewSet):
     @action(methods=['post'], url_path='stop-vm', detail=True)
     def handle_stop_vm(self, request, pk=None):
         vm = VirtualMachine.objects.get(pk=pk)
-        if vm.status == constant.STOPPED_STATUS:
+        if vm.status == constants.ACTIVE_STATUS:
             return Response({"vm_id": vm.id, "status": False, 'message': 'VM is not running'}, status.HTTP_400_BAD_REQUEST)
         stop_status = stop_vm(vm.vm_id)
         user = request.user
         if stop_status.__eq__("OK"):
-            vm.status = constant.STOPPED_STATUS
+            vm.status = constants.ACTIVE_STATUS
             vm.save()
             log = Log.objects.filter(user=user, virtual_machine=vm, time_start__isnull=False).first()
             if log:
@@ -89,8 +94,8 @@ class ProxmoxViewSet(viewsets.ViewSet):
                 log.save()
         return Response({"vm_id": vm.id, "status": stop_status.__eq__("OK"), 'message': stop_status}, status.HTTP_200_OK)
 
-    @action(methods=['get'], url_path='get-ipv4', detail=True)
-    def get_ipv4_address(self, request, pk=None):
+    @action(methods=['get'], url_path='get-ip', detail=True)
+    def get_ip_address(self, request, pk=None):
         vm = VirtualMachine.objects.get(pk=pk)
         ip = get_vm_ip(vm.vm_id)
         message = 'OK'

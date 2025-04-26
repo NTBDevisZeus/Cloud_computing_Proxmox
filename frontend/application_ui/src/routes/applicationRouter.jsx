@@ -4,6 +4,7 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import AuthenticatedRoute from './authenticatedRoute'
 import ApplicationLayout from '../components/AppicationLayout'
+import VMList from '../pages/VMList'
 
 const ApplicationRouter = ()  => {
     return (<BrowserRouter>
@@ -12,8 +13,8 @@ const ApplicationRouter = ()  => {
             <Route index={true} path ="/"element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path='/test' element={<AuthenticatedRoute>
-                                                <Home/>
+            <Route path='/vms' element={<AuthenticatedRoute>
+                                                <VMList/>
                                             </AuthenticatedRoute>}/>
         </Route>
     </Routes>
