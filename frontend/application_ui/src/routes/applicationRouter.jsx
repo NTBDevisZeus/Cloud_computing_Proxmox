@@ -5,6 +5,7 @@ import Register from '../pages/Register'
 import AuthenticatedRoute from './authenticatedRoute'
 import ApplicationLayout from '../components/AppicationLayout'
 import VMList from '../pages/VMList'
+import RegistVM from '../pages/RegistVM'
 
 const ApplicationRouter = ()  => {
     return (<BrowserRouter>
@@ -16,7 +17,10 @@ const ApplicationRouter = ()  => {
             <Route path='/vms' element={<AuthenticatedRoute>
                                                 <VMList/>
                                             </AuthenticatedRoute>}/>
-        </Route>
+            <Route path='/regist-vm/:templateid' element={<AuthenticatedRoute>
+                                                <RegistVM/>
+                                        </AuthenticatedRoute>}/>
+            </Route>
     </Routes>
     </BrowserRouter>)
 }

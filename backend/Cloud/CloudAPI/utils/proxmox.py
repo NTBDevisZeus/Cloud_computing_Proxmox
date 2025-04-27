@@ -28,6 +28,7 @@ def check_task_status(node_id, task_id):
             sleep(2)
             task_status = proxmox_server.nodes(node_id).tasks(task_id).status.get()
             step += 1
+        print(task_status)
         return task_status['exitstatus']
     except Exception as e:
         print(e)

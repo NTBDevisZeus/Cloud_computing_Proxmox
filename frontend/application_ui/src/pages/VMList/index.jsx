@@ -10,8 +10,10 @@ const VMList = () => {
 
     const fetchUserVms = async () => {
         const result = await callGetUserVM(user['id'])
-
-        setVms(result['data'])
+        if (result['data']) {
+            setVms(result['data'])
+        }
+        
     }
 
     const renderActionButton = (id, index, status) => {
@@ -107,7 +109,7 @@ const VMList = () => {
         <div>
             {ipList.length > 0 && (
                 <>
-                    <h5 className='mt-5'>Địa chỉ IP - Mã máy ảo: {showVMIpId}</h5>
+                    <h6 className='mt-5'>Địa chỉ IP - Mã máy ảo: {showVMIpId}</h6>
                     <table className='table'>
                         <thead>
                             <tr>

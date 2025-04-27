@@ -57,9 +57,11 @@ class ProxmoxViewSet(viewsets.ViewSet):
                                                        date_end=date_end,
                                                        status=constants.AVAILABLE_STATUS)
 
-                Invoice.objects.create(
+                invoice =  Invoice.objects.create(
                     virtual_machine=new_vm,
                     total_amount=constants.VM_PRICE)
+                user.wallet -= invoice.total_amount
+                user.save()
         except Exception as e:
             print(e)
         if new_vm:

@@ -136,10 +136,25 @@ const callgetVMIp  = async (id) => {
     return result;  
 }
 
+const callCreateVM = async (payload) => {
+    const caller = authenticatedCaller()
+    let result = null
+    await caller.post(endpoints['vms']['create'], payload)
+    .then(success => {
+        result = bindSuccess(success) 
+    })
+    .catch(error => {
+        result = bindError(error)
+    })
+    return result;  
+}
+
 export {callLogin, 
     fetchUserInfo, 
     callRegistUser, 
     callGetUserVM, 
     callStartVM, 
     callStopVM,
-    callgetVMIp}
+    callgetVMIp,
+    callCreateVM
+}

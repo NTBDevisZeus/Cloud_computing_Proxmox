@@ -9,6 +9,7 @@ const endpoints = {
         vms: (id) => `/users/${id}/vms/`
     },
     vms: {
+        create: '/vms/create-vm/',
         start: (id) => `/vms/${id}/start-vm/`,
         stop: (id) => `/vms/${id}/stop-vm/`,
         ip: (id) => `/vms/${id}/get-ip/`

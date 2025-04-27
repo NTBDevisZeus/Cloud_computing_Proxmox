@@ -4,7 +4,7 @@ import './App.css'
 import UserContext from './context/user'
 import ApplicationRouter from './routes/applicationRouter'
 import { fetchUserInfo } from './apis/callers';
-
+import "react-datepicker/dist/react-datepicker.css";
 function App() {
   const [user, setUser] = useState(null)
   ;
