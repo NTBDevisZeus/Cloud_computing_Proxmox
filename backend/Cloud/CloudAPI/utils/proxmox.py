@@ -132,3 +132,20 @@ def get_vm_ip(vm_id):
         return None
     except Exception as e:
         print(e)
+
+
+def get_os_type_name(ostype_code):
+        os_type_mapping = {
+            'l26': 'Linux',
+            'win10': 'Windows 10',
+            'win11': 'Windows 11',
+            'win7': 'Windows 7',
+            'win8': 'Windows 8',
+            'w2k8': 'Windows Server 2008',
+            'w2k12': 'Windows Server 2012',
+            'w2k16': 'Windows Server 2016',
+            'w2k19': 'Windows Server 2019',
+            'solaris': 'Solaris',
+            'other': 'Khác'
+        }
+        return os_type_mapping.get(ostype_code, 'Không xác định')

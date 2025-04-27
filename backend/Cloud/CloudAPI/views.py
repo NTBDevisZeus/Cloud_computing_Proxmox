@@ -3,7 +3,7 @@ from datetime import datetime
 from rest_framework import viewsets, generics, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from CloudAPI.utils.proxmox import connect_to_proxmox, create_vm_from_template, start_vm, stop_vm, get_vm_ip
+from CloudAPI.utils.proxmox import connect_to_proxmox, create_vm_from_template, start_vm, stop_vm, get_vm_ip, get_os_type_name
 from CloudAPI.utils import constants
 from CloudAPI.models import User, VirtualMachine, Invoice, Log
 from CloudAPI.serializers import UserSerializer, VirtualMachineSerializer
@@ -37,6 +37,41 @@ class ProxmoxViewSet(viewsets.ViewSet):
         except Exception as e:
             print(e)
             return Response({"status": "failed", "error": str(e)}, status=500)
+
+    @action(methods=['get'], url_path='list-vm-templates', detail=False)
+    def list_vm_templates(self, request):
+        try:
+            proxmox = connect_to_proxmox()
+            nodes = proxmox.nodes.get()
+            templates = []
+
+            for node in nodes:
+                node_name = node['node']
+                qemu_vms = proxmox.nodes(node_name).qemu.get()
+
+                for vm in qemu_vms:
+                    if vm.get('template', 0) == 1:
+                        vmid = vm.get('vmid')
+                        config = proxmox.nodes(node_name).qemu(vmid).config.get()
+
+                        ostype_code = config.get('ostype', 'unknown')
+                        ostype_name = get_os_type_name(ostype_code)
+
+                        template_info = {
+                            'vmid': vmid,
+                            'name': vm.get('name', f"template-{vmid}"),
+                            'node': node_name,
+                            'cpu': vm.get('cpus'),
+                            'memory_mb': round(vm.get('maxmem', 0) / 1024 / 1024, 2),
+                            'disk_size_gb': round(vm.get('maxdisk', 0) / 1024 / 1024 / 1024, 2),
+                            'os_type': ostype_name
+                        }
+                        templates.append(template_info)
+
+            return Response({"status": "success", "templates": templates})
+        except Exception as e:
+            print("[ERROR]", e)
+            return Response({"status": "failed", "error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(methods=['post'], url_path='create-vm', detail=False)
     def handle_create_vm(self, request):

@@ -1,0 +1,226 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f8;
+    color: #2c3e50;
+}
+
+.home-container {
+    padding: 0 20px 50px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    padding: 15px 30px;
+    color: white;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-buttons button {
+    margin-left: 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-buttons button:hover {
+    background-color: #2980b9;
+}
+
+/* Thêm phần user-info */
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    color: white;
+}
+
+.user-icon {
+    font-size: 26px;
+    margin-right: 8px;
+}
+
+.user-name {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Main Content */
+h1 {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 32px;
+}
+
+.templates-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Template Card */
+.template-card {
+    background-color: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.template-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.template-card h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #34495e;
+}
+
+.view-details {
+    font-size: 16px;
+    color: #3498db;
+    margin-top: 8px;
+    text-decoration: underline;
+}
+
+/* Loader */
+.loader {
+    margin: 50px auto;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Error Text */
+.error-text {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Modal content */
+.modal-content {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Table trong modal */
+.template-table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+.template-table td {
+    padding: 10px 5px;
+    border-bottom: 1px solid #eaeaea;
+    font-size: 16px;
+    text-align: left;
+}
+
+.template-table td:first-child {
+    font-weight: bold;
+    width: 40%;
+}
+
+.template-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Modal buttons */
+.modal-content button {
+    width: 100%;
+    padding: 14px 18px;
+    margin-top: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Create VM button */
+.modal-content button:first-of-type {
+    background-color: #3498db;
+    color: white;
+}
+
+.modal-content button:first-of-type:hover {
+    background-color: #2980b9;
+}
+
+/* Close button */
+.close-button {
+    background-color: #e74c3c;
+    color: white;
+    margin-top: 10px;
+}
+
+.close-button:hover {
+    background-color: #c0392b;
+}

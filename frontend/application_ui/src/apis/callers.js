@@ -96,6 +96,21 @@ const callGetUserVM = async (userid) => {
     })
     return result;  
 }
+const fetchTemplates = async () => {
+    const caller = authenticatedCaller();
+    try {
+        const response = await caller.get(endpoints.vms.listTemplates);
+        return {
+            message: 'success',
+            templates: response.data.templates || []
+        };
+    } catch (error) {
+        return {
+            message: error.response?.data?.message || error.message,
+            templates: []
+        };
+    }
+};
 
 const callStartVM  = async (id) => {
     const caller = authenticatedCaller()
@@ -149,6 +164,8 @@ const callCreateVM = async (payload) => {
     return result;  
 }
 
+
+
 export {callLogin, 
     fetchUserInfo, 
     callRegistUser, 
@@ -156,5 +173,6 @@ export {callLogin,
     callStartVM, 
     callStopVM,
     callgetVMIp,
-    callCreateVM
+    callCreateVM,
+    fetchTemplates
 }
