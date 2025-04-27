@@ -10,8 +10,8 @@ function App() {
   ;
   const initUserInfo = async () => {
     const userInfo = await fetchUserInfo()
-    if (userInfo) {
-      setUser(userInfo)
+    if (userInfo['data']) {
+      setUser(userInfo['data'])
     }
     else {
       localStorage.removeItem("accessToken")

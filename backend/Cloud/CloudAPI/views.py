@@ -55,7 +55,7 @@ class ProxmoxViewSet(viewsets.ViewSet):
                                                        unit_price=constants.VM_PRICE,
                                                        date_release=date_release,
                                                        date_end=date_end,
-                                                       status=constants.ACTIVE_STATUS)
+                                                       status=constants.AVAILABLE_STATUS)
 
                 Invoice.objects.create(
                     virtual_machine=new_vm,
@@ -81,12 +81,12 @@ class ProxmoxViewSet(viewsets.ViewSet):
     @action(methods=['post'], url_path='stop-vm', detail=True)
     def handle_stop_vm(self, request, pk=None):
         vm = VirtualMachine.objects.get(pk=pk)
-        if vm.status == constants.ACTIVE_STATUS:
+        if vm.status == constants.AVAILABLE_STATUS:
             return Response({"vm_id": vm.id, "status": False, 'message': 'VM is not running'}, status.HTTP_400_BAD_REQUEST)
         stop_status = stop_vm(vm.vm_id)
         user = request.user
         if stop_status.__eq__("OK"):
-            vm.status = constants.ACTIVE_STATUS
+            vm.status = constants.AVAILABLE_STATUS
             vm.save()
             log = Log.objects.filter(user=user, virtual_machine=vm, time_start__isnull=False).first()
             if log:

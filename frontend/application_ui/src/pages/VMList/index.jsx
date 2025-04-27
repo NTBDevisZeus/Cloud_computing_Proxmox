@@ -16,7 +16,7 @@ const VMList = () => {
 
     const renderActionButton = (id, index, status) => {
         switch(status) {
-            case "ACTIVE": {
+            case "AVAILABLE": {
                 return <button onClick={() => onStartVM(id, index)} className='btn btn-primary'>Chạy</button>
             }
             case "EXPIRED": {
