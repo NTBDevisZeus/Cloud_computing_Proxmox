@@ -1,24 +1,34 @@
 import './styles.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
+import { useContext } from 'react';
+import UserContext from '../../context/user';
 
-const Navbar = ({ isAuthenticated, userName, handleLogout }) => {
+const Navbar = () => {
   const navigate = useNavigate();
-
+  const {user, setUser} = useContext(UserContext)
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken')
+    setUser(null)
+  }
+  
   return (
     <nav className="navbar">
       <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
         MyCloud
       </div>
       <div className="nav-right">
-        {isAuthenticated ? (
+        {user ? (
           <>
             <div className="user-info">
               <FaUserCircle className="user-icon" />
-              <span className="user-name">{userName}</span>
+              <span className="user-name">{user['username']}</span>
+              <span className='ms-2'>{user['wallet']}</span>
             </div>
             <div className="nav-buttons">
-              <button onClick={() => navigate('/create-vm')}>Tạo máy ảo</button>
+              <Link to={'/vms'} >Danh sách máy ảo</Link>
+            </div>
+            <div className="nav-buttons">
               <button onClick={handleLogout}>Đăng xuất</button>
             </div>
           </>

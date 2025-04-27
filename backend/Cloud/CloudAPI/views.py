@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from rest_framework import viewsets, generics, status, permissions
 from rest_framework.decorators import action
@@ -84,17 +84,19 @@ class ProxmoxViewSet(viewsets.ViewSet):
             if new_vm_id:
                 date_release = request.data['date_release']
                 date_end = request.data['date_end']
+                days = datetime.strptime(date_end, "%Y-%m-%dT%H:%M:%S.%fZ") - datetime.strptime(date_release, "%Y-%m-%dT%H:%M:%S.%fZ")
+                amount = int(days.days + 2) * int(constants.VM_PRICE)
                 new_vm = VirtualMachine.objects.create(name=vm_name,
                                                        vm_id=new_vm_id,
                                                        user=user,
-                                                       unit_price=constants.VM_PRICE,
+                                                       unit_price=amount,
                                                        date_release=date_release,
                                                        date_end=date_end,
                                                        status=constants.AVAILABLE_STATUS)
 
                 invoice =  Invoice.objects.create(
                     virtual_machine=new_vm,
-                    total_amount=constants.VM_PRICE)
+                    total_amount=amount)
                 user.wallet -= invoice.total_amount
                 user.save()
         except Exception as e:

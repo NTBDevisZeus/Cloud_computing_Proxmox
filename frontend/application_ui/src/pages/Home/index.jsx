@@ -40,16 +40,9 @@ const Home = () => {
     loadTemplates();
   }, [accessToken]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('userName');
-    sessionStorage.removeItem('userName');
-    navigate('/login');
-  };
 
   const handleCreateVM = (template) => {
-    navigate('/create-vm', { state: { template } });
+    navigate(`/regist-vm/${template['vmid']}`, {state: template});
   };
 
   const openTemplateDetail = (template) => {
@@ -64,14 +57,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Navbar */}
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        userName={userName}
-        handleLogout={handleLogout}
-      />
 
-      {/* Main content */}
       <main>
         <h1>Danh Sách Templates</h1>
 
@@ -104,7 +90,7 @@ const Home = () => {
       {/* Modal chi tiết template */}
       {selectedTemplate && (
         <div className="modal-overlay" onClick={closeTemplateDetail}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content bg-white" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedTemplate.name}</h2>
             <table className="template-table">
               <tbody>

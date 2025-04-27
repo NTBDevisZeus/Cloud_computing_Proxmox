@@ -41,6 +41,23 @@ body {
     background-color: #2980b9;
 }
 
+
+.nav-buttons a {
+    margin-left: 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-buttons a:hover {
+    background-color: #2980b9;
+}
+
 /* Thêm phần user-info */
 .nav-right {
     display: flex;
