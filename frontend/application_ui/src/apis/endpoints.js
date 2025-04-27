@@ -12,7 +12,8 @@ const endpoints = {
         create: '/vms/create-vm/',
         start: (id) => `/vms/${id}/start-vm/`,
         stop: (id) => `/vms/${id}/stop-vm/`,
-        ip: (id) => `/vms/${id}/get-ip/`
+        ip: (id) => `/vms/${id}/get-ip/`,
+        listTemplates: '/vms/list-vm-templates/'
     }
 }
 
